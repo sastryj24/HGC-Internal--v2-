@@ -52,8 +52,8 @@ class PerformancesViewController: UITableViewController {
                                  let datums = try JSONDecoder().decode(outsidePerforms.self, from: data!)
                                  let temp = datums.data
                                  let tempMdata = temp.collection
-                                 print(temp)
-                                 print(tempMdata)
+//                                 print(temp)
+//                                 print(tempMdata)
                              
                                 if self.sworks.count == 0 {
                                     self.sworks = tempMdata!
@@ -65,17 +65,19 @@ class PerformancesViewController: UITableViewController {
                                 if let row = self.sworks.firstIndex(where: {$0.year == nil}) {
                                     self.sworks[row].year = "0001"
                                 }
-                                self.finalWorks = self.sworks.sorted {$0.year < $1.year}
-                                print(self.sworks.count)
-                                 print(self.finalWorks.count)
+//                                print(self.sworks.count)
+//                                print(self.finalWorks.count)
                                 
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData()
-                                }
                              }
                              catch let error {
                                  print("\(error)")
                              }
+                            
+                            self.sworks = self.sworks.sorted {$0.year > $1.year}
+                            self.finalWorks = self.sworks
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
                             
                          }.resume()
                      }
